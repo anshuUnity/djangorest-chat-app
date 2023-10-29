@@ -13,6 +13,7 @@ class JWTAuthentication(BaseAuthentication):
 
     def authenticate(self, request):
         token = self.extract_token(request=request)
+        print(token, "TOKEN")
         if token is None:
             return None
         
@@ -22,7 +23,8 @@ class JWTAuthentication(BaseAuthentication):
 
             user_id = payload['id']
             user = User.objects.get(id=user_id)
-            return user
+            print(user, "USER")
+            return (user,token)
         except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
             raise AuthenticationFailed("Invalid Token")
 
