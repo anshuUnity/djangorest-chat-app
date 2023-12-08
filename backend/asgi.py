@@ -1,5 +1,5 @@
 """
-ASGI config for backend project.
+ASGI config for fact_wise project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,16 +11,15 @@ import os
 
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.security.websocket import AllowedHostsOriginValidator
-from chat.channels_middleware import JWTWebSocketMiddleware
+from chat.route import websocket_urlpatterns
 from channels.auth import AuthMiddlewareStack
-from chat.routing import websocket_urlpatterns
+from chat.channels_middleware import JWTWebsocketMiddleware
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fact_wise.settings')
 
 application = get_asgi_application()
 
 application = ProtocolTypeRouter({
-    "http": application,
-    "websocket": JWTWebSocketMiddleware(AuthMiddlewareStack(URLRouter(websocket_urlpatterns)))
+    "http":application,
+    "websocket":JWTWebsocketMiddleware(AuthMiddlewareStack(URLRouter(websocket_urlpatterns)))
 })

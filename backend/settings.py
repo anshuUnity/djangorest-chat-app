@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'accounts',
-    'chat'
 ]
 
 MIDDLEWARE = [
@@ -67,7 +66,7 @@ AUTH_USER_MODEL = "accounts.User"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'accounts.tokenauthentication.JWTAuthentication'
-    ],
+    ]
 }
 
 TEMPLATES = [
@@ -92,10 +91,8 @@ ASGI_APPLICATION = "backend.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
+        "CONFIG": {"hosts": [("127.0.0.1", 6379)]},
+    }
 }
 
 
@@ -104,12 +101,8 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'chat_app',
-        'USER': 'anshu',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

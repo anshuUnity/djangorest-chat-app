@@ -2,9 +2,9 @@ import jwt
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from channels.db import database_sync_to_async
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from channels.db import database_sync_to_async
 from datetime import datetime, timedelta
 
 User = get_user_model()
@@ -13,7 +13,6 @@ class JWTAuthentication(BaseAuthentication):
 
     def authenticate(self, request):
         token = self.extract_token(request=request)
-        print(token, "TOKEN")
         if token is None:
             return None
         
@@ -23,8 +22,7 @@ class JWTAuthentication(BaseAuthentication):
 
             user_id = payload['id']
             user = User.objects.get(id=user_id)
-            print(user, "USER")
-            return (user,token)
+            return (user, token)
         except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
             raise AuthenticationFailed("Invalid Token")
 
@@ -55,7 +53,7 @@ class JWTAuthentication(BaseAuthentication):
             return user
         except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
             raise AuthenticationFailed("Invalid Token")
-
+        
     @staticmethod
     def generate_token(payload):
         expiation = datetime.utcnow() + timedelta(hours=24)

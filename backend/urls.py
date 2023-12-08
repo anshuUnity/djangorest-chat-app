@@ -16,12 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts.views import register_user, login
-from chat.views import get_user_list, get_chat_list
+from chat.views import get_user_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/register/', register_user, name="register"),
-    path('api/login/', login, name="login"),
+    path('register/', register_user, name="register"),
+    path('login/', login, name="login"),
     path('api/users/', get_user_list, name="users"),
-    path('api/chat/<int:opponent_id>/', get_chat_list, name="chats")
 ]
